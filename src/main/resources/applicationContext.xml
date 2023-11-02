@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- <context:component-scan base-package="com.lip6.services.*" /> <context:annotation-config/> -->
+    <bean id="emf" class="com.lip6.util.JpaUtil" factory-method="getEmf"/>
+
+
+    <!-- Contacts -->
+    <bean id="contactKrish" class="com.lip6.entities.Contact">
+        <constructor-arg value="Krish"/>
+        <constructor-arg value="Theva"/>
+        <constructor-arg value="krishTheva@gmail.com"/>
+    </bean>
+
+    <bean id="contactAurel" class="com.lip6.entities.Contact">
+        <constructor-arg value="Aurel"/>
+        <constructor-arg value="Sharma"/>
+        <constructor-arg value="AurelSharma@gmail.com"/>
+    </bean>
+
+    <bean id="contactMarie" class="com.lip6.entities.Contact">
+        <constructor-arg value="Marie"/>
+        <constructor-arg value="Pierre"/>
+        <constructor-arg value="MariePierre@gmail.com"/>
+    </bean>
+
+    <!-- ContactGroup -->
+    <bean id="contactGroupMIAGE" class="com.lip6.entities.ContactGroup">
+        <constructor-arg value="M2 MIAGE APP"/>
+    </bean>
+
+</beans>
