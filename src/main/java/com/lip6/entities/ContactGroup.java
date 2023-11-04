@@ -39,7 +39,15 @@ public class ContactGroup {
 	public void setContacts(Set<Contact> contacts) {
 		this.contacts = contacts;
 	}
-	
-	
+
+	public void addContact(Contact contact) {
+		this.contacts.add(contact);
+		contact.getContactGroups().add(this);
+	}
+
+	public void removeContact(Contact contact) {
+		this.contacts.remove(contact);
+		contact.getContactGroups().remove(this);
+	}
 
 }

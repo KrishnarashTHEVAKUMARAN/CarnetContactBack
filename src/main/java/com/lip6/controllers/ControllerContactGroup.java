@@ -1,6 +1,10 @@
 package com.lip6.controllers;
 
+import com.lip6.dtos.DTOAddress;
+import com.lip6.dtos.DTOContact;
 import com.lip6.dtos.DTOContactGroup;
+import com.lip6.dtos.DTOPhoneNumber;
+import com.lip6.entities.Contact;
 import com.lip6.entities.ContactGroup;
 import com.lip6.services.ServiceContactGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +48,28 @@ public class ControllerContactGroup {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Retournez le code 204 No Content lors de la suppression réussie.
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Retournez le code 500 si une erreur survient.
+        }
+    }
+
+    @GetMapping("/contactGroupById/{id}")
+    public DTOContactGroup getContactGroup(@PathVariable Long id) {
+        ContactGroup contactGroup = serviceContactGroupe.getContactGroup(id);
+
+        DTOContactGroup dtoContactGroup = new DTOContactGroup(
+                contactGroup.getGroupId(),
+                contactGroup.getGroupName()
+        );
+
+        return dtoContactGroup;
+    }
+
+    @PostMapping("/addContactGroups/{idGroup}/{idContact}")
+    public ResponseEntity<ContactGroup> addContactToGroup(@PathVariable("idGroup") Long idGroup, @PathVariable("idContact") Long idContact) {
+        try {
+            serviceContactGroupe.addContactinContactGroup(idGroup, idContact);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -11,4 +11,9 @@ public interface IDAOContactGroup {
     public List<ContactGroup> getAllContacts();
 
     public boolean deleteContactGroup(long id);
+
+    public ContactGroup getContactGroup(long id);
+
+    public boolean addContactInContactGroup(long idGroup, long idContact);
+
 }

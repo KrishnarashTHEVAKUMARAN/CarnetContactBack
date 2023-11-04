@@ -24,4 +24,14 @@ public class ServiceContactGroup {
         return daocg.deleteContactGroup(idContactGroup);
     }
 
+    public ContactGroup getContactGroup(long idContact) {
+        DAOContactGroup daocg=new DAOContactGroup();
+        return daocg.getContactGroup(idContact);
+    }
+
+    public boolean addContactinContactGroup(long idGroup, long idContact) {
+        DAOContactGroup daocg=new DAOContactGroup();
+        return daocg.addContactInContactGroup(idGroup, idContact);
+    }
+
 }
