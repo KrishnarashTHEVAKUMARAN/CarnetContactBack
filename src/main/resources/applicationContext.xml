@@ -10,21 +10,121 @@
 
     <!-- Contacts -->
     <bean id="contactKrish" class="com.lip6.entities.Contact">
-        <constructor-arg value="Krish"/>
-        <constructor-arg value="Theva"/>
-        <constructor-arg value="krishTheva@gmail.com"/>
+        <property name="firstName" value="Krish"/>
+        <property name="lastName" value="Theva"/>
+        <property name="email" value="krishTheva@gmail.com"/>
+        <property name="address">
+            <ref bean="adressKrish"/>
+        </property>
+        <property name="phones">
+            <set>
+                <ref bean="numKrish1"/>
+                <ref bean="numKrish2"/>
+            </set>
+        </property>
     </bean>
 
     <bean id="contactAurel" class="com.lip6.entities.Contact">
-        <constructor-arg value="Aurel"/>
-        <constructor-arg value="Sharma"/>
-        <constructor-arg value="AurelSharma@gmail.com"/>
+        <property name="firstName" value="Aurel"/>
+        <property name="lastName" value="Sharma"/>
+        <property name="email" value="AurelSharma@gmail.com"/>
+        <property name="address">
+            <ref bean="adressAurel"/>
+        </property>
+        <property name="phones">
+            <set>
+                <ref bean="numAurel1"/>
+                <ref bean="numAurel2"/>
+            </set>
+        </property>
     </bean>
 
-    <bean id="contactMarie" class="com.lip6.entities.Contact">
-        <constructor-arg value="Marie"/>
-        <constructor-arg value="Pierre"/>
-        <constructor-arg value="MariePierre@gmail.com"/>
+    <!-- Adresse -->
+    <bean id="adressKrish"
+          class="com.lip6.entities.Address">
+        <property name="street">
+            <value>84 Rue Krish</value>
+        </property>
+        <property name="zip">
+            <value>92130</value>
+        </property>
+        <property name="city">
+            <value>Issy-Les-Moulineaux</value>
+        </property>
+        <property name="country">
+            <value>France</value>
+        </property>
+        <property name="contact">
+            <ref bean="contactKrish"/>
+        </property>
+    </bean>
+
+    <bean id="adressAurel"
+          class="com.lip6.entities.Address">
+        <property name="street">
+            <value>100 Rue Aurel</value>
+        </property>
+        <property name="zip">
+            <value>92000</value>
+        </property>
+        <property name="city">
+            <value>Nanterre</value>
+        </property>
+        <property name="country">
+            <value>France</value>
+        </property>
+        <property name="contact">
+            <ref bean="contactAurel"/>
+        </property>
+    </bean>
+
+    <!-- Num -->
+    <bean id="numKrish1" class="com.lip6.entities.PhoneNumber">
+        <property name="phoneKind">
+            <value>Fixe</value>
+        </property>
+        <property name="phoneNumber">
+            <value>0187845427</value>
+        </property>
+        <property name="contact">
+            <ref bean="contactKrish"/>
+        </property>
+    </bean>
+
+    <bean id="numKrish2" class="com.lip6.entities.PhoneNumber">
+        <property name="phoneKind">
+            <value>Portable</value>
+        </property>
+        <property name="phoneNumber">
+            <value>0647895965</value>
+        </property>
+        <property name="contact">
+            <ref bean="contactKrish"/>
+        </property>
+    </bean>
+
+    <bean id="numAurel1" class="com.lip6.entities.PhoneNumber">
+        <property name="phoneKind">
+            <value>Fixe</value>
+        </property>
+        <property name="phoneNumber">
+            <value>0187456522</value>
+        </property>
+        <property name="contact">
+            <ref bean="contactAurel"/>
+        </property>
+    </bean>
+
+    <bean id="numAurel2" class="com.lip6.entities.PhoneNumber">
+        <property name="phoneKind">
+            <value>Portable</value>
+        </property>
+        <property name="phoneNumber">
+            <value>0789522452</value>
+        </property>
+        <property name="contact">
+            <ref bean="contactAurel"/>
+        </property>
     </bean>
 
     <!-- ContactGroup -->

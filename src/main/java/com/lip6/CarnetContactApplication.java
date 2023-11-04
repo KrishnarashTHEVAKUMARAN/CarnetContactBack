@@ -31,10 +31,6 @@ public class CarnetContactApplication implements CommandLineRunner {
 	private Contact contactAurel;
 
 	@Autowired
-	@Qualifier("contactMarie")
-	private Contact contactMarie;
-
-	@Autowired
 	@Qualifier("contactGroupMIAGE")
 	private ContactGroup contactGroupMIAGE;
 
@@ -46,7 +42,6 @@ public class CarnetContactApplication implements CommandLineRunner {
 	public void run(String... args) {
 		serviceContact.createContact(contactKrish);
 		serviceContact.createContact(contactAurel);
-		serviceContact.createContact(contactMarie);
 
 		serviceContactGroup.createContactGroup(contactGroupMIAGE);
 	}
