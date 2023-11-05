@@ -10,7 +10,7 @@ public class ContactGroup {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long groupId;
 	private String groupName;
-	@ManyToMany(mappedBy="contactGroups")
+	@ManyToMany(mappedBy="contactGroups", fetch = FetchType.EAGER)
 	private Set <Contact> contacts=new HashSet<Contact>();
 
 	public ContactGroup(String groupName) {

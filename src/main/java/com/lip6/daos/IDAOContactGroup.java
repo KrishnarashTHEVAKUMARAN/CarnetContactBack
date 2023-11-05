@@ -1,8 +1,10 @@
 package com.lip6.daos;
 
+import com.lip6.entities.Contact;
 import com.lip6.entities.ContactGroup;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IDAOContactGroup {
 
@@ -15,5 +17,9 @@ public interface IDAOContactGroup {
     public ContactGroup getContactGroup(long id);
 
     public boolean addContactInContactGroup(long idGroup, long idContact);
+
+    public Set<Contact> getContactsInContactGroup(long idGroup);
+
+    public boolean deleteContactFromContactGroup(long idGroup, long idContact);
 
 }

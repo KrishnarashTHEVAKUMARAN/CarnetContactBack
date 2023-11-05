@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class DAOContactGroup implements IDAOContactGroup{
     @Override
@@ -60,6 +61,9 @@ public class DAOContactGroup implements IDAOContactGroup{
                     .getSingleResult();
 
             if (contactGroup != null) {
+                for (Contact contact : contactGroup.getContacts()) {
+                    contact.getContactGroups().remove(contactGroup);
+                }
                 em.remove(contactGroup);
                 tx.commit();
                 success = true;
@@ -106,7 +110,9 @@ public class DAOContactGroup implements IDAOContactGroup{
         try {
             tx.begin();
 
-            ContactGroup contactGroup = em.find(ContactGroup.class, idGroup);
+            ContactGroup contactGroup = em.createQuery("SELECT cg FROM ContactGroup cg WHERE cg.groupId = :id", ContactGroup.class)
+                    .setParameter("id", idGroup)
+                    .getSingleResult();
 
             Contact contact = em.createQuery("SELECT c FROM Contact c WHERE c.idContact = :id", Contact.class)
                     .setParameter("id", idContact)
@@ -114,6 +120,58 @@ public class DAOContactGroup implements IDAOContactGroup{
 
             contactGroup.addContact(contact);
             em.merge(contactGroup);
+            tx.commit();
+            success = true;
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return success;
+    }
+
+    @Override
+    public Set<Contact> getContactsInContactGroup(long idGroup) {
+        EntityManager em = JpaUtil.getEmf().createEntityManager();
+        Set<Contact> contacts = null;
+        try {
+            ContactGroup contactGroup = em.createQuery("SELECT cg FROM ContactGroup cg WHERE cg.groupId = :id", ContactGroup.class)
+                    .setParameter("id", idGroup)
+                    .getSingleResult();
+
+            if (contactGroup != null) {
+                contacts = contactGroup.getContacts();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return contacts;
+    }
+
+    @Override
+    public boolean deleteContactFromContactGroup(long idGroup, long idContact) {
+        EntityManager em = JpaUtil.getEmf().createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        boolean success = false;
+        try {
+            tx.begin();
+            ContactGroup contactGroup = em.createQuery("SELECT cg FROM ContactGroup cg WHERE cg.groupId = :id", ContactGroup.class)
+                    .setParameter("id", idGroup)
+                    .getSingleResult();
+
+            Contact contact = em.createQuery("SELECT c FROM Contact c WHERE c.idContact = :id", Contact.class)
+                    .setParameter("id", idContact)
+                    .getSingleResult();
+
+            if (contactGroup != null && contact != null) {
+                contactGroup.removeContact(contact);
+                em.merge(contactGroup);
+            }
             tx.commit();
             success = true;
         } catch (Exception e) {

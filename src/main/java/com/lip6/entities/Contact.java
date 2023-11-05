@@ -46,7 +46,7 @@ public class Contact {
 	@OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL,mappedBy = "contact", orphanRemoval = true)
 	@JsonManagedReference
 	Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
-	@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	@JoinTable(name="CTC_GRP", joinColumns=@JoinColumn(name="CTC_ID"),inverseJoinColumns=@JoinColumn(name="GRP_ID"))
 	private Set<ContactGroup> contactGroups=new HashSet<>();
 	
@@ -76,7 +76,7 @@ public class Contact {
 		this.address = address;
 	}
 
-	public void addaddress(Address address) {
+	public void addAddress(Address address) {
 	    this.address = address;
 	}
 
