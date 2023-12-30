@@ -115,7 +115,7 @@ public class DAOContact implements IDAOContact {
 
 	@Override
 	//Avec JPQL Parametre
-	public boolean deleteContact(long id) {
+	/*public boolean deleteContact(long id) {
 	    boolean success = false;
 
 	    try {
@@ -139,9 +139,49 @@ public class DAOContact implements IDAOContact {
 	        e.printStackTrace();
 	    }
 	    return success;
+	}*/
+	public boolean deleteContact(long id) {
+		EntityManager em = JpaUtil.getEmf().createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		boolean isDeleted = false;
+
+		try {
+			tx.begin();
+
+			// Supprimer les enregistrements Address liés au contact
+			Query deleteAddress = em.createQuery("DELETE FROM Address a WHERE a.contact.idContact = :contactId");
+			deleteAddress.setParameter("contactId", id);
+			deleteAddress.executeUpdate();
+
+			// Supprimer les enregistrements PhoneNumber liés au contact
+			Query deletePhoneNumber = em.createQuery("DELETE FROM PhoneNumber p WHERE p.contact.idContact = :contactId");
+			deletePhoneNumber.setParameter("contactId", id);
+			deletePhoneNumber.executeUpdate();
+
+			// Supprimer le contact
+			Query deleteContact = em.createQuery("DELETE FROM Contact c WHERE c.idContact = :contactId");
+			deleteContact.setParameter("contactId", id);
+			int deletedCount = deleteContact.executeUpdate();
+
+			tx.commit();
+
+			isDeleted = deletedCount > 0;
+
+		} catch (PersistenceException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			throw e;
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return isDeleted;
 	}
 
-	
+
 	@Override
 	// Avec API Criteria
 	public List<Contact> getAllContacts() {
