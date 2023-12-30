@@ -115,31 +115,6 @@ public class DAOContact implements IDAOContact {
 
 	@Override
 	//Avec JPQL Parametre
-	/*public boolean deleteContact(long id) {
-	    boolean success = false;
-
-	    try {
-	        EntityManager em = JpaUtil.getEmf().createEntityManager();
-	        EntityTransaction tx = em.getTransaction();
-	        tx.begin();
-
-	        Contact contact = em.createQuery("SELECT c FROM Contact c WHERE c.idContact = :id", Contact.class)
-	                .setParameter("id", id)
-	                .getSingleResult();
-	        
-	        if (contact != null) {
-	            em.remove(contact);
-	            tx.commit();
-	            success = true;
-	        }else {
-	            tx.rollback(); 
-	        }
-	        em.close();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return success;
-	}*/
 	public boolean deleteContact(long id) {
 		EntityManager em = JpaUtil.getEmf().createEntityManager();
 		EntityTransaction tx = em.getTransaction();
